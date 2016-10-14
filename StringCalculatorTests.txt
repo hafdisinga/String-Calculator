@@ -1,0 +1,42 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class StringCalculatorTests {
+
+	@Test
+	public void testEmptyString() throws Exception {
+		assertEquals(0, StringCalculator.add(""));
+	}
+	
+	@Test
+	public void testOneNumber() throws Exception{
+		assertEquals(2, StringCalculator.add("2"));
+	}
+	
+	@Test
+	public void testTwoNumbers() throws Exception{
+		assertEquals(3, StringCalculator.add(“1, 2”));
+	}
+	
+	@Test
+	public void testMultipleNumbers() throws Exception {
+		assertEquals(10, StringCalculator.add("0, 1, 2, 3, 4"));
+	}
+	
+	@Test
+	public void testIfNumInNewLine() throws Exception  {
+		assertEquals(6, StringCalculator.add("1, 2\n 3"));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testIfNumIsNeg() throws Exception {
+		StringCalculator.add("-3, -2");
+		StringCalculator.add("2, -4");
+	}
+	
+	@Test
+	public void testIfNumIsTooBig() throws Exception {
+		assertEquals(80, StringCalculator.add("50, 30, 1001"));
+	}
+}
