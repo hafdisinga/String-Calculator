@@ -1,0 +1,82 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class StringCalculator {
+	
+	public static final int MAX = 1000;
+
+	
+	public static int add(String numbers) {
+        
+		if(numbers.equals("")){
+			return 0;
+		}
+		
+		List<Integer> numList = stringToInt(numbers);
+        NegativesNotAllowed(numList);
+        
+        List<Integer> newNumList = IgnoreBigNumbers(numList);
+        
+        return sum(newNumList);
+    }
+
+	
+    private static List<Integer> stringToInt(String input) {
+    	 
+    	 List<Integer> list = new ArrayList<Integer>();
+    	 
+    	 String[] numbers = input.split(", | \n");
+    	 
+    	 if(numbers.length > 2){
+    		 throw new IllegalArgumentException("The list cannot have more than two numbers!");
+    	 }
+    	 else {
+    		 for(int i = 0; i < numbers.length; i++){
+    			 list.add(Integer.parseInt(numbers[i]));
+    		 }
+    	 }
+    	 return list;
+    }
+    
+    
+    private static void NegativesNotAllowed(List<Integer> num){
+        
+    	List<Integer> negatives = new ArrayList<Integer>();
+        
+        for (Integer n : num){
+            if (n < 0) {
+                negatives.add(n);
+            }
+        }
+        
+        if (!negatives.isEmpty()){
+            throw new IllegalArgumentException("Negatives not allowed: " + negatives);
+        }
+    }
+    
+    
+    private static List<Integer> IgnoreBigNumbers(List<Integer> list) {
+       
+    	List<Integer> newList = new ArrayList<Integer>();
+    	
+        for (Integer num : list){
+            if (num <= MAX) {
+                newList.add(num);
+            }
+        }
+        return newList;
+    }
+    
+
+    private static int sum(List<Integer> numbers) {
+        
+    	int sum = 0;
+        
+        for (Integer n : numbers){
+            sum = sum + n;
+        }
+        return sum;
+    }
+
+}
